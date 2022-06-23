@@ -1,0 +1,35 @@
+{
+  "inputs": [],
+  "name": "getLands",
+  "outputs": [
+    {
+      "components": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "int256",
+          "name": "posX",
+          "type": "int256"
+        },
+        {
+          "internalType": "int256",
+          "name": "posY",
+          "type": "int256"
+        }
+      ],
+      "internalType": "struct Land.LandModel[]",
+      "name": "",
+      "type": "tuple[]"
+    }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+}
