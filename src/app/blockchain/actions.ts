@@ -14,23 +14,16 @@ import abi from 'common/assets/files/abi.json'
 export const connectToSmartContract =
   () =>
   async (dispatch: AppDispatch): Promise<void> => {
-    const { ethereum } = window
+    const web3 = new Web3(
+      'https://rinkeby.infura.io/v3/f5860a06f73149bea05a71a54c6cb8f9'
+    )
 
-    if (ethereum !== undefined) {
-      const web3 = new Web3(Web3.givenProvider)
-      const chainId = await ethereum.request({ method: 'eth_chainId' })
-
-      // check whether they are on the same chain id/network (https://chainlist.org/)
-      if (process.env.REACT_APP_CHAIN_ID === chainId) {
-        // create smart contract connection
-        const contract = new web3.eth.Contract(
-          abi as unknown as AbiItem | AbiItem[],
-          process.env.REACT_APP_SMART_CONTRACT_ADDRESS
-        )
-        dispatch(setWeb3(web3))
-        dispatch(setContract(contract))
-      }
-    }
+    const contract = new web3.eth.Contract(
+      abi as unknown as AbiItem | AbiItem[],
+      process.env.REACT_APP_SMART_CONTRACT_ADDRESS
+    )
+    dispatch(setWeb3(web3))
+    dispatch(setContract(contract))
   }
 
 export const handleAccountChanged =

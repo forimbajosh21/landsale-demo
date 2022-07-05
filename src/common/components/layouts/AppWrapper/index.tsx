@@ -1,4 +1,7 @@
 import React from 'react'
+import Appbar from 'common/components/base/Appbar'
+import { Outlet } from 'react-router-dom'
+import { Alert, Snackbar } from '@mui/material'
 import { Maybe } from '@metamask/providers/dist/utils'
 
 import { useAppDispatch } from 'app/hooks'
@@ -9,11 +12,12 @@ import {
   connectMetamask,
 } from 'app/blockchain/actions'
 
-import Appbar from 'common/components/base/Appbar'
-import { Outlet } from 'react-router-dom'
-
 const AppWrapperLayout: React.FC = () => {
   const dispatch = useAppDispatch()
+
+  const [open, setOpen] = React.useState(false)
+
+  const handleClose = () => setOpen(false)
 
   React.useEffect(() => {
     // initialize connection to smart contract
@@ -38,11 +42,13 @@ const AppWrapperLayout: React.FC = () => {
         window.location.reload()
       })
     }
-  }, [])
+  }, [dispatch])
 
   const handleOnConnectMetamask = React.useCallback(() => {
     if (isEthereumPresent()) {
       dispatch(connectMetamask())
+    } else {
+      setOpen(true)
     }
   }, [dispatch])
 
@@ -54,6 +60,11 @@ const AppWrapperLayout: React.FC = () => {
         onConnect={handleOnConnectMetamask}
       />
       <Outlet />
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }}>
+          Please install Metamask and refresh page
+        </Alert>
+      </Snackbar>
     </>
   )
 }

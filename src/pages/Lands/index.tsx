@@ -142,7 +142,7 @@ const LandsPage = () => {
                 </ListItem>
               )
             }),
-          [lists, isEthereumAddress, current, isContractBuying, landNameToBuy]
+          [lists, landNameToBuy, current, isContractBuying, handleBuyLand]
         )}
       </List>
     </Container>
